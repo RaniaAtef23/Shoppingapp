@@ -1,7 +1,9 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/features/Home/data/models/Category.dart';
-import 'package:shopping_app/features/Home/presentation/views/Screens/CategoryProductScreen.dart';
+
+import '../CategoryProductScreen.dart';
+
 class SmallCategoryWidget extends StatelessWidget {
   final Category category;
 
@@ -19,10 +21,10 @@ class SmallCategoryWidget extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.w), // Responsive padding
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8.0), // Adjusted margin for better spacing
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0), // Adjusted padding for better alignment
+          margin: EdgeInsets.symmetric(horizontal: 8.w), // Responsive margin for better spacing
+          padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w), // Responsive padding
           decoration: BoxDecoration(
             color: Colors.white, // Background color of the container
             borderRadius: BorderRadius.circular(12.0), // Rounded corners for a modern look
@@ -40,8 +42,8 @@ class SmallCategoryWidget extends StatelessWidget {
             child: Text(
               category.name,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16.0, // Adjusted font size for better readability
+              style: TextStyle(
+                fontSize: 12.sp, // Responsive font size for better readability
                 fontWeight: FontWeight.bold,
                 color: Colors.orange, // Text color
               ),

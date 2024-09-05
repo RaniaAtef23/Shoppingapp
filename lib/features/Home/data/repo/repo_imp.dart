@@ -15,7 +15,7 @@ class RepoHomeImpl extends HomeRepo {
       final endpoint = 'products?limit=$limit&skip=$skip'; // Endpoint with pagination
       var data = await apiService.getdata(endpoint: endpoint);
 
-      if (data == null || data["products"] == null) {
+      if (data["products"] == null) {
         return left(server_error(error: 'Invalid response format'));
       }
 
@@ -37,7 +37,7 @@ class RepoHomeImpl extends HomeRepo {
       final endpoint = 'products/category/$category?limit=$limit&skip=$skip';
       var data = await apiService.getdata(endpoint: endpoint);
 
-      if (data == null || data["products"] == null) {
+      if (data["products"] == null) {
         return left(server_error(error: 'Invalid response format'));
       }
 

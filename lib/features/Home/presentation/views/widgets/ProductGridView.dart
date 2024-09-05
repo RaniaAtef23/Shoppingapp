@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/features/Home/data/models/Products.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ProductCard.dart';
 
 class ProductGridView extends StatelessWidget {
   final List<Products> products;
 
-  const ProductGridView({Key? key, required this.products}) : super(key: key);
+  const ProductGridView({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
     if (products.isEmpty) {
-      return Center(child: Text('No products available'));
+      return const Center(child: Text('No products available'));
     }
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.w), // Responsive padding
       child: GridView.builder(
         shrinkWrap: true, // Allows GridView to fit within the constraints of its parent
         physics: const NeverScrollableScrollPhysics(), // Disable scrolling
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // Number of columns in the grid
-          crossAxisSpacing: 8.0, // Horizontal spacing between items
-          mainAxisSpacing: 8.0, // Vertical spacing between items
+          crossAxisSpacing: 8.w, // Responsive horizontal spacing
+          mainAxisSpacing: 8.h, // Responsive vertical spacing
           childAspectRatio: 0.6, // Aspect ratio of each item
         ),
         itemCount: products.length,

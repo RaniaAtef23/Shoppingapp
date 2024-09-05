@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:shopping_app/features/Home/data/models/Category.dart';
-import 'package:shopping_app/features/Home/presentation/views/Screens/CategoryProductScreen.dart';
-
+import '../../../Home/presentation/views/CategoryProductScreen.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
@@ -16,26 +16,24 @@ class CategoryCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => CategoryProductsScreen(category: category),
-
           ),
         );
-
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h), // Use ScreenUtil for padding
         child: Card(
           elevation: 8.0, // Slightly elevated for a modern look
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(20.r), // Use ScreenUtil for border radius
           ),
           child: Stack(
             children: <Widget>[
               ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20.r), // Use ScreenUtil for border radius
                 child: Image.asset(
                   category.imageUrl, // Ensure this path is correct
                   fit: BoxFit.cover,
-                  height: 180,
+                  height: 180.h, // Use ScreenUtil for height
                   width: double.infinity,
                 ),
               ),
@@ -50,7 +48,7 @@ class CategoryCard extends StatelessWidget {
                         Colors.black.withOpacity(0.6),
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(20.0), // Match card border radius
+                    borderRadius: BorderRadius.circular(20.r), // Match card border radius
                   ),
                 ),
               ),
@@ -59,8 +57,8 @@ class CategoryCard extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     category.name,
-                    style: const TextStyle(
-                      fontSize: 22,
+                    style: TextStyle(
+                      fontSize: 22.sp, // Use ScreenUtil for font size
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       shadows: [

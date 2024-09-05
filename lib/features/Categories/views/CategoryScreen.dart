@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app/features/Home/presentation/views/widgets/category.dart';
-import '../../../data/models/Category.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopping_app/features/Categories/views/widgets/category.dart';
+import '../../Home/data/models/Category.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -10,7 +11,6 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  // Define the list of categories here
   final List<Category> categories = [
     Category(name: 'Beauty', imageUrl: 'assets/photo_12_2024-07-23_21-30-07.jpg'),
     Category(name: 'Fragrances', imageUrl: 'assets/photo_22_2024-07-23_21-30-07.jpg'),
@@ -64,7 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(5.w),
             child: CategoryCard(category: categories[index]),
           );
         },

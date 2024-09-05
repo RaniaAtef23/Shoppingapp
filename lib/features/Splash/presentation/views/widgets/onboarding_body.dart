@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/features/Home/data/models/Category.dart';
 import 'package:shopping_app/features/Splash/data/onboarding_model.dart';
-import 'package:shopping_app/features/authentication/screens/create_account_view.dart';
+import 'package:shopping_app/features/authentication/create_account_view.dart';
 
 
 class onboarding extends StatefulWidget {

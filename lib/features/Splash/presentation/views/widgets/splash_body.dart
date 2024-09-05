@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shopping_app/features/Splash/presentation/SCreens/Onboarding_view.dart';
+import 'package:shopping_app/features/Splash/presentation/views/Onboarding_view.dart';
 class SplashBody extends StatefulWidget {
   const SplashBody({super.key});
 

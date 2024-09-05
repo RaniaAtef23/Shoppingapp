@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'package:shopping_app/features/Home/presentation/views/Screens/favoyrite_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../data/models/Products.dart';
-import '../Screens/details_screen.dart';
+import '../details_screen.dart';
+import '../favoyrite_screen.dart'; // Corrected the spelling of 'favorite_screen'
+
 class SmallProductCard extends StatefulWidget {
   final Products product;
 
@@ -35,7 +36,7 @@ class _SmallProductCardState extends State<SmallProductCard> {
         );
       },
       child: Container(
-        width: 160, // Smaller width
+        width: 160.w, // Responsive width
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           color: Colors.orange[100],
@@ -48,7 +49,7 @@ class _SmallProductCardState extends State<SmallProductCard> {
             ),
           ],
         ),
-        margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0),
+        margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w), // Responsive margin
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -58,7 +59,7 @@ class _SmallProductCardState extends State<SmallProductCard> {
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
                   child: Image.network(
                     widget.product.thumbnail ?? 'https://via.placeholder.com/100',
-                    height: 150,
+                    height: 110.h, // Responsive height
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => const Center(
@@ -71,8 +72,8 @@ class _SmallProductCardState extends State<SmallProductCard> {
                   ),
                 ),
                 Positioned(
-                  top: 8,
-                  right: 8,
+                  top: 8.h, // Responsive position
+                  right: 8.w, // Responsive position
                   child: ValueListenableBuilder<List<Products>>(
                     valueListenable: FavoritesScreen.favoriteProductsNotifier,
                     builder: (context, favoriteProducts, child) {
@@ -93,7 +94,7 @@ class _SmallProductCardState extends State<SmallProductCard> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.w), // Responsive padding
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -102,13 +103,13 @@ class _SmallProductCardState extends State<SmallProductCard> {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.black87,
                       fontWeight: FontWeight.w600,
-                      fontSize: 17,
+                      fontSize: 16.sp, // Responsive font size
                     ),
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4.0),
+                  SizedBox(height: 4.h), // Responsive height
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
@@ -118,17 +119,17 @@ class _SmallProductCardState extends State<SmallProductCard> {
                             ? Icons.star
                             : Icons.star_border,
                         color: Colors.orange,
-                        size: 15,
+                        size: 15.sp, // Responsive icon size
                       ),
                     ),
                   ),
-                  const SizedBox(height: 4.0),
+                  SizedBox(height: 4.h), // Responsive height
                   Text(
                     '\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 16.sp, // Responsive font size
                     ),
                     textAlign: TextAlign.center,
                   ),

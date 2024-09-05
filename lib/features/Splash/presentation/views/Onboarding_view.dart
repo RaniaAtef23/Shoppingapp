@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
-
-import 'package:shopping_app/features/Splash/presentation/Widgets/onboarding_body.dart';
+import 'package:shopping_app/features/Splash/presentation/views/widgets/onboarding_body.dart';
 class onboarding_view extends StatefulWidget {
   const onboarding_view({super.key});
 
@@ -21,7 +20,7 @@ class _onboarding_viewState extends State<onboarding_view> with SingleTickerProv
         pages: [
           // First page with a gradient background and gradient text
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.orange, Colors.yellow,Colors.orange],
                 begin: Alignment.topLeft,
@@ -30,12 +29,12 @@ class _onboarding_viewState extends State<onboarding_view> with SingleTickerProv
             ),
             child: Center(
               child: ShaderMask(
-                shaderCallback: (bounds) => LinearGradient(
+                shaderCallback: (bounds) => const LinearGradient(
                   colors: [Colors.white60, Colors.white],
                   begin: Alignment.centerRight,
                   end: Alignment.centerLeft,
                 ).createShader(bounds),
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -63,7 +62,7 @@ class _onboarding_viewState extends State<onboarding_view> with SingleTickerProv
             ),
           ),
           // Onboarding view as the second page
-          onboarding(),
+          const onboarding(),
         ],
         enableLoop: false, // Disable looping if you want to go directly to onboarding_view
         fullTransitionValue: 300, // Customize this value as needed

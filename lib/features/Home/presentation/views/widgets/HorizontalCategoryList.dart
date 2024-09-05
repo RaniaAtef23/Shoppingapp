@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/features/Home/data/models/Category.dart';
 
 import 'package:shopping_app/features/Home/presentation/views/widgets/SmallCategoryWidget.dart';
@@ -13,7 +14,7 @@ class HorizontalCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 70, // Adjust height as needed
+      height: 60.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,

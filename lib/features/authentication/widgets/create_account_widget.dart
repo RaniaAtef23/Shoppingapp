@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:shopping_app/features/authentication/screens/create_account_view.dart';
+import 'package:shopping_app/features/authentication/create_account_view.dart';
 
-import '../screens/login_view.dart';
 class Create_account_body extends StatefulWidget {
   const Create_account_body({super.key});
 

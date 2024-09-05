@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import screen utilities
 import 'package:shopping_app/features/Home/presentation/views/widgets/cart_widget.dart';
-import '../../../data/models/Products.dart';
+import '../../data/models/Products.dart';
+
 class FavoritesScreen extends StatefulWidget {
   static ValueNotifier<List<Products>> favoriteProductsNotifier = ValueNotifier([]);
 
@@ -51,8 +52,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               return ListTile(
                 leading: Image.network(
                   product.thumbnail ?? 'https://via.placeholder.com/150',
-                  width: 50,
-                  height: 50,
+                  width: 50.w, // Use screen utility for width
+                  height: 50.h, // Use screen utility for height
                 ),
                 title: Text(product.title ?? 'Product Title'),
                 subtitle: Text('\$${product.price?.toStringAsFixed(2) ?? '0.00'}'),
@@ -63,6 +64,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       icon: const Icon(Icons.shopping_cart, color: Colors.orange),
                       onPressed: () {
                         CartWidget.addProduct(product);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('${product.title} added to cart')),
+                        );
                       },
                     ),
                     IconButton(

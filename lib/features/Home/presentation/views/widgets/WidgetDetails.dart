@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:shopping_app/features/Home/presentation/views/Screens/cart_view.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopping_app/features/Home/presentation/views/cart_view.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/cart_widget.dart';
 import '../../../data/models/Products.dart';
+import '../favoyrite_screen.dart';
 
 class WidgetDetails extends StatefulWidget {
   final Products product;
 
-  WidgetDetails({super.key, required this.product});
+  const WidgetDetails({super.key, required this.product});
 
   @override
   State<WidgetDetails> createState() => _WidgetDetailsState();
 }
 
-class _WidgetDetailsState extends State<WidgetDetails> {
+class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  bool isFavorited = false;
+  bool isInCart = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    ScreenUtil.init(context, designSize: const Size(360, 690), minTextAdapt: true); // Initialize ScreenUtil
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
           widget.product.title!,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w600,
             color: Colors.orange,
           ),
@@ -32,28 +46,19 @@ class _WidgetDetailsState extends State<WidgetDetails> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Product Image
             Container(
-              height: 350,
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.white,
-                    spreadRadius: 2,
-                    blurRadius: 10,
-                    offset: Offset(0, 5),
-                  ),
-                ],
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)), // Use responsive radius
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)),
                 child: Image.network(
                   widget.product.images?.first ?? 'https://via.placeholder.com/150',
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Center(
+                  errorBuilder: (context, error, stackTrace) => const Center(
                     child: Icon(
                       Icons.error,
                       color: Colors.red,
@@ -63,251 +68,233 @@ class _WidgetDetailsState extends State<WidgetDetails> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h), // Use responsive height
+            // Product Information
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.product.title ?? 'Product Title',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}",
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Discount: ${widget.product.discountPercentage?.toStringAsFixed(2) ?? '0.00'}%",
-                        style: TextStyle(
-                          color: Colors.orangeAccent,
-                          fontSize: 20,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Stock: ${widget.product.stock?.toString() ?? 'N/A'}",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        widget.product.description ?? 'Product description',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16,
-                        ),
-                      ),
+              padding: EdgeInsets.symmetric(horizontal: 16.w), // Use responsive width
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Product title and price
+                  Text(
+                    widget.product.title ?? 'Product Title',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.h), // Use responsive height
+                  Text(
+                    "\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}",
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      color: Colors.orange,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 16.h), // Use responsive height
+                  // Tab Bar
+                  TabBar(
+                    controller: _tabController,
+                    labelColor: Colors.orange,
+                    unselectedLabelColor: Colors.black54,
+                    indicatorColor: Colors.orange,
+                    tabs: const [
+                      Tab(text: 'Details'),
+                      Tab(text: 'Reviews'),
                     ],
                   ),
-                ),
+                  // TabBarView
+                  SizedBox(
+                    height: 300.h, // Set a fixed height for the TabBarView
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        _buildDetailsTab(),
+                        _buildReviewsTab(),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoRow("Brand", widget.product.brand ?? 'Product brand'),
-                      const SizedBox(height: 8),
-                      _buildInfoRow("Warranty", widget.product.warrantyInformation ?? 'N/A'),
-                      const SizedBox(height: 8),
-                      _buildInfoRow("Return Policy", widget.product.returnPolicy ?? 'N/A'),
-                      const SizedBox(height: 8),
-                      _buildInfoRow("Minimum Order Quantity", widget.product.minimumOrderQuantity?.toString() ?? 'N/A'),
-                      const SizedBox(height: 16),
-                      if (widget.product.meta?.qrCode != null)
-                        Center(
-                          child: Image.network(
-                            widget.product.meta!.qrCode!,
-                            height: 120,
-                            width: 120,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) => const Center(
-                              child: Icon(
-                                Icons.error,
-                                color: Colors.red,
-                                size: 40,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.favorite,
+                color: isFavorited ? Colors.red : Colors.grey,
               ),
+              onPressed: toggleFavorite,
             ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Reviews",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      if (widget.product.reviews != null && widget.product.reviews!.isNotEmpty)
-                        Column(
-                          children: widget.product.reviews!.map((review) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      RatingBarIndicator(
-                                        rating: (review.rating ?? 0.0).toDouble(),
-                                        itemBuilder: (context, index) => Icon(
-                                          Icons.star,
-                                          color: Colors.orange,
-                                        ),
-                                        itemCount: 5,
-                                        itemSize: 20.0,
-                                        direction: Axis.horizontal,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        "(${review.rating?.toString() ?? '0'}/5)",
-                                        style: TextStyle(
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    review.comment ?? 'No comment',
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    review.date ?? 'Date not available',
-                                    style: TextStyle(
-                                      color: Colors.black45,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        )
-                      else
-                        Center(
-                          child: Text(
-                            'No reviews yet',
-                            style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
+            IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: isInCart ? Colors.orange : Colors.grey,
               ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  minimumSize: Size(double.infinity, 50),
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                ),
-                onPressed: () {
+              onPressed: () {
+                setState(() {
+                  isInCart = !isInCart;
+                });
+                if (isInCart) {
                   CartWidget.addProduct(widget.product);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Cart_view()),
-                  );
-                },
-                child: const Text(
-                  "Add To Cart",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
+                } else {
+                  // Handle removal from cart if needed
+                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Cart_view()),
+                );
+              },
             ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
-    return Row(
-      children: [
-        Text(
-          "$label:",
+  // Function to toggle favorite status
+  void toggleFavorite() {
+    setState(() {
+      isFavorited = !isFavorited;
+      if (isFavorited) {
+        // Example: FavoritesScreen.addFavorite(widget.product);
+      } else {
+        // Example: FavoritesScreen.removeFavorite(widget.product);
+      }
+    });
+  }
+
+  // Details Tab
+  Widget _buildDetailsTab() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(16.w), // Use responsive width
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Description",
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8.h), // Use responsive height
+            Text(
+              widget.product.description ?? 'No description available',
+              style: const TextStyle(
+                color: Colors.black54,
+                fontSize: 16, // Adjusted for ScreenUtil if needed
+              ),
+            ),
+            SizedBox(height: 16.h), // Use responsive height
+            // More information
+            _buildInfoRow("Brand", widget.product.brand ?? 'Product brand'),
+            SizedBox(height: 5.h), // Use responsive height
+            _buildInfoRow("Warranty", widget.product.warrantyInformation ?? 'N/A'),
+            SizedBox(height: 5.h), // Use responsive height
+            _buildInfoRow("Return Policy", widget.product.returnPolicy ?? 'N/A'),
+            SizedBox(height: 5.h), // Use responsive height
+            _buildInfoRow("Minimum Order Quantity", widget.product.minimumOrderQuantity?.toString() ?? 'N/A'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Reviews Tab
+  Widget _buildReviewsTab() {
+    return Padding(
+      padding: EdgeInsets.all(16.w), // Use responsive width
+      child: widget.product.reviews != null && widget.product.reviews!.isNotEmpty
+          ? ListView.builder(
+        itemCount: widget.product.reviews!.length,
+        itemBuilder: (context, index) {
+          final review = widget.product.reviews![index];
+          return Padding(
+            padding: EdgeInsets.only(bottom: 16.h), // Use responsive height
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    RatingBarIndicator(
+                      rating: (review.rating ?? 0.0).toDouble(),
+                      itemBuilder: (context, index) => const Icon(
+                        Icons.star,
+                        color: Colors.orange,
+                      ),
+                      itemCount: 5,
+                      itemSize: 20.0,
+                      direction: Axis.horizontal,
+                    ),
+                    SizedBox(width: 8.w), // Use responsive width
+                    Text(
+                      "(${review.rating?.toString() ?? '0'}/5)",
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8.h), // Use responsive height
+                Text(
+                  review.comment ?? 'No comment',
+                  style: const TextStyle(
+                    color: Colors.black54,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: 8.h), // Use responsive height
+                Text(
+                  review.date ?? 'Date not available',
+                  style: const TextStyle(
+                    color: Colors.black45,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      )
+          : const Center(
+        child: Text(
+          'No reviews yet',
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+            color: Colors.black45,
             fontSize: 16,
           ),
         ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-              color: Colors.orangeAccent,
-              fontSize: 16,
-            ),
+      ),
+    );
+  }
+
+  // Function to build rows for information
+  Row _buildInfoRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
+          ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.black54,
+            fontSize: 16,
           ),
         ),
       ],
