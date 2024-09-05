@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 import 'package:shopping_app/features/Categories/views/CategoryScreen.dart';
-import 'package:shopping_app/features/Home/presentation/views/cart_view.dart';
+import 'package:shopping_app/features/CartFavoriteItems/presentation/views/cart_view.dart';
 import 'HomeView.dart';
-import 'favoyrite_screen.dart';
+import '../../../CartFavoriteItems/presentation/views/favoyrite_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

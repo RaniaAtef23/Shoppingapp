@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopping_app/features/CartFavoriteItems/presentation/views/widgets/cart_widget.dart';
+import 'package:shopping_app/features/CartFavoriteItems/presentation/views/widgets/favorite_product_notifier.dart';
 import '../../../data/models/Products.dart';
-import '../cart_view.dart';
 import '../details_screen.dart';
-import '../favoyrite_screen.dart';
-import 'cart_widget.dart';
+import '../../../../CartFavoriteItems/presentation/views/cart_view.dart';
 
 class ProductCard extends StatefulWidget {
   final Products product;
@@ -22,9 +22,9 @@ class _ProductCardState extends State<ProductCard> {
     setState(() {
       isFavorite = !isFavorite;
       if (isFavorite) {
-        FavoritesScreen.addFavorite(widget.product);
+        FavoriteProductNotifier.addFavorite(widget.product);
       } else {
-        FavoritesScreen.removeFavorite(widget.product);
+        FavoriteProductNotifier.removeFavorite(widget.product);
       }
     });
   }
@@ -51,7 +51,6 @@ class _ProductCardState extends State<ProductCard> {
           );
         },
         child: Card(
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0.sp), // Responsive radius
           ),
@@ -82,7 +81,7 @@ class _ProductCardState extends State<ProductCard> {
                     top: 8.h,
                     right: 8.w,
                     child: ValueListenableBuilder<List<Products>>(
-                      valueListenable: FavoritesScreen.favoriteProductsNotifier,
+                      valueListenable: FavoriteProductNotifier.favoriteProductsNotifier,
                       builder: (context, favoriteProducts, child) {
                         final isFavorite = favoriteProducts.contains(widget.product);
                         return IconButton(
@@ -92,7 +91,6 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                           onPressed: () {
                             toggleFavorite();
-                            FavoritesScreen.favoriteProductsNotifier.notifyListeners();
                           },
                         );
                       },
@@ -151,7 +149,7 @@ class _ProductCardState extends State<ProductCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.shopping_cart, color: Colors.red, size: 25,),
+                          icon: const Icon(Icons.shopping_cart, color: Colors.red, size: 25),
                           onPressed: addToCart,
                         ),
                         Text(
@@ -163,11 +161,8 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-
-
                       ],
                     ),
-
                   ],
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
-import '../../../data/models/Products.dart';
+import '../../../../Home/data/models/Products.dart';
 
 class CartWidget extends StatefulWidget {
   static ValueNotifier<List<Products>> cartProductsNotifier = ValueNotifier([]);
@@ -236,6 +236,62 @@ class _CartWidgetState extends State<CartWidget> {
                               fontSize: 18.sp), // Use ScreenUtil
                         ),
                         onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    // Use min to avoid taking up extra space
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Image.network("assets/0Hh1OfxW4H.gif"),
+                                      Text(
+                                        'Ordered successfully',
+                                        style: TextStyle(
+                                          color: const Color(0xFF101623),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18.sp,
+                                          fontFamily: 'Comfortaa',
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                  actions: [
+                                    Center(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                          // Close the dialog
+                                        },
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: Colors.orange,
+                                          // Green background
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10), // Circular border
+                                          ),
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                                        ),
+                                        child: Text(
+                                          "Done",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16.sp,
+                                            fontFamily: 'Comfortaa',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+
                           // Handle order now action
                         },
                       ),

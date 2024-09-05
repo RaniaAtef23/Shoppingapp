@@ -8,12 +8,9 @@ import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fe
 import 'package:shopping_app/features/Categories/views/CategoryScreen.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ImageSlider.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ProductGridView.dart';
-import 'package:shopping_app/features/Home/presentation/views/widgets/popular_product_list.dart';
+import 'package:shopping_app/features/Home/presentation/views/widgets/product_list_view.dart';
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 import 'package:shopping_app/features/authentication/login_view.dart';
-import '../../data/models/Category.dart';
-import '../../data/models/Category.dart';
-import '../../data/models/Category.dart';
 import 'widgets/HorizontalCategoryList.dart';
 
 class HomeView extends StatefulWidget {

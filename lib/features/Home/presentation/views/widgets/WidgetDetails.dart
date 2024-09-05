@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_app/features/Home/presentation/views/cart_view.dart';
-import 'package:shopping_app/features/Home/presentation/views/widgets/cart_widget.dart';
+import 'package:shopping_app/features/CartFavoriteItems/presentation/views/cart_view.dart';
+import 'package:shopping_app/features/CartFavoriteItems/presentation/views/widgets/cart_widget.dart';
 import '../../../data/models/Products.dart';
-import '../favoyrite_screen.dart';
 
 class WidgetDetails extends StatefulWidget {
   final Products product;
@@ -117,45 +116,110 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: Icon(
-                Icons.favorite,
-                color: isFavorited ? Colors.red : Colors.grey,
-              ),
-              onPressed: toggleFavorite,
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
-                color: isInCart ? Colors.orange : Colors.grey,
-              ),
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 setState(() {
                   isInCart = !isInCart;
                 });
                 if (isInCart) {
                   CartWidget.addProduct(widget.product);
-                } else {
-                  // Handle removal from cart if needed
                 }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Cart_view()),
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        // Use min to avoid taking up extra space
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/Animation - 1725631509849.gif"),
+                          Text(
+                            'Success',
+                            style: TextStyle(
+                              color: const Color(0xFF101623),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18.sp,
+                              fontFamily: 'Comfortaa',
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              'Product has been added to your cart successfully!',
+                              style: TextStyle(
+                                color: const Color(0xFFA1A8B0),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.sp,
+                                fontFamily: 'Comfortaa',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        Center(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart_view())); // Close the dialog
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                              // Green background
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10), // Circular border
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                            ),
+                            child: Text(
+                              "Done",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.sp,
+                                fontFamily: 'Comfortaa',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
+              child: Container(
+                width: 300.w,
+                height: 45.h,
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    "Add To Cart",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ),
+            SizedBox(height: 5.h), // Corrected to avoid errors
           ],
         ),
       ),
     );
   }
+
 
   // Function to toggle favorite status
   void toggleFavorite() {
