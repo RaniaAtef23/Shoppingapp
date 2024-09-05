@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
-import '../../../data/models/Products.dart';
+import '../../../../Home/data/models/Products.dart';
 
 class CartWidget extends StatefulWidget {
   static ValueNotifier<List<Products>> cartProductsNotifier = ValueNotifier([]);

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_app/features/Home/presentation/views/cart_view.dart';
-import 'package:shopping_app/features/Home/presentation/views/widgets/cart_widget.dart';
+import 'package:shopping_app/features/CartFavoriteItems/presentation/views/cart_view.dart';
+import 'package:shopping_app/features/CartFavoriteItems/presentation/views/widgets/cart_widget.dart';
 import '../../../data/models/Products.dart';
-import '../favoyrite_screen.dart';
-
 class WidgetDetails extends StatefulWidget {
   final Products product;
 

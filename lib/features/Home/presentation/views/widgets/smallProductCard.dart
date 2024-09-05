@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../CartFavoriteItems/presentation/views/widgets/favorite_product_notifier.dart';
 import '../../../data/models/Products.dart';
 import '../details_screen.dart';
-import '../favoyrite_screen.dart'; // Corrected the spelling of 'favorite_screen'
 
 class SmallProductCard extends StatefulWidget {
   final Products product;
@@ -16,10 +16,10 @@ class SmallProductCard extends StatefulWidget {
 class _SmallProductCardState extends State<SmallProductCard> {
   void toggleFavorite() {
     setState(() {
-      if (FavoritesScreen.favoriteProductsNotifier.value.contains(widget.product)) {
-        FavoritesScreen.removeFavorite(widget.product);
+      if (FavoriteProductNotifier.favoriteProductsNotifier.value.contains(widget.product)) {
+        FavoriteProductNotifier.removeFavorite(widget.product);
       } else {
-        FavoritesScreen.addFavorite(widget.product);
+        FavoriteProductNotifier.addFavorite(widget.product);
       }
     });
   }
@@ -75,7 +75,7 @@ class _SmallProductCardState extends State<SmallProductCard> {
                   top: 8.h, // Responsive position
                   right: 8.w, // Responsive position
                   child: ValueListenableBuilder<List<Products>>(
-                    valueListenable: FavoritesScreen.favoriteProductsNotifier,
+                    valueListenable: FavoriteProductNotifier.favoriteProductsNotifier,
                     builder: (context, favoriteProducts, child) {
                       final isFavorite = favoriteProducts.contains(widget.product);
                       return IconButton(
@@ -85,7 +85,6 @@ class _SmallProductCardState extends State<SmallProductCard> {
                         ),
                         onPressed: () {
                           toggleFavorite();
-                          FavoritesScreen.favoriteProductsNotifier.notifyListeners();
                         },
                       );
                     },
