@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/core/network/service_locator.dart';
+import 'package:shopping_app/features/Home/presentation/views/HomeView.dart';
 import 'features/Home/presentation/views/MainScreen.dart';
+import 'features/Splash/presentation/views/Splash_view.dart';
 
 void main() {
   setup();
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: const SafeArea(child: MainScreen()),
+        home: const SafeArea(child: HomeView()),
       );
     }
     );

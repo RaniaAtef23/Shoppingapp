@@ -1,5 +1,3 @@
-// lib/views/home_view.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -213,21 +211,26 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
                   if (_isSearchVisible)
-                    SearchResultsWidget(
-                      filteredProducts: _filteredProducts,
-                      searchController: _searchController,
-                      onSearchChanged: (query) {
-                        setState(() {
-                          _filteredProducts = filterProducts(state.moreproducts, query);
-                        });
-                      },
-                      onClose: () {
-                        setState(() {
-                          _isSearchVisible = false;
-                          _searchController.clear();
-                          _filteredProducts = [];
-                        });
-                      },
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: SearchResultsWidget(
+                        filteredProducts: _filteredProducts,
+                        searchController: _searchController,
+                        onSearchChanged: (query) {
+                          setState(() {
+                            _filteredProducts = filterProducts(state.moreproducts, query);
+                          });
+                        },
+                        onClose: () {
+                          setState(() {
+                            _isSearchVisible = false;
+                            _searchController.clear();
+                            _filteredProducts = [];
+                          });
+                        },
+                      ),
                     ),
                 ],
               ),

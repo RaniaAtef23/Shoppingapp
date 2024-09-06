@@ -41,7 +41,7 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
 
     return SizedBox(
-      height: 100.h,
+
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -52,20 +52,22 @@ class _ProductCardState extends State<ProductCard> {
           );
         },
         child: Card(
+
+
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
           elevation: 8,
           margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+
             children: [
               Stack(
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
                     child: Container(
-                      height: 300.h,
+                      height: 200.h,
                       width: double.infinity,
                       child: Image.network(
                         widget.product.thumbnail ?? 'https://via.placeholder.com/150',
@@ -87,7 +89,7 @@ class _ProductCardState extends State<ProductCard> {
                           icon: Icon(
                             isFavorite ? Icons.favorite : Icons.favorite_border,
                             color: isFavorite ? Colors.red : Colors.grey,
-                            size: 10,
+                            size: 20.sp,
                           ),
                           onPressed: toggleFavorite,
                         );
@@ -138,7 +140,7 @@ class _ProductCardState extends State<ProductCard> {
                               ? Icons.star
                               : Icons.star_border,
                           color: Colors.orange,
-                          size:   10,
+                          size:   15.sp,
                         ),
                       ),
                     ),
@@ -149,7 +151,7 @@ class _ProductCardState extends State<ProductCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.shopping_cart, color: Colors.red, size:10),
+                              icon: Icon(Icons.shopping_cart, color: Colors.red, size:15.sp),
                               onPressed: addToCart,
                             ),
                             Expanded(
