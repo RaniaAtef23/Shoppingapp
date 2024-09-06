@@ -1,23 +1,21 @@
-
 import 'package:flutter/material.dart';
 import 'package:shopping_app/features/Home/data/models/Category.dart';
 import 'package:shopping_app/features/Splash/data/onboarding_model.dart';
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 
-
-class onboarding extends StatefulWidget {
-  const onboarding({super.key});
+class Onboarding extends StatefulWidget {
+  const Onboarding({super.key});
 
   @override
-  _onboardingState createState() => _onboardingState(categories: []);
+  _OnboardingState createState() => _OnboardingState(categories: []);
 }
 
-class _onboardingState extends State<onboarding> {
+class _OnboardingState extends State<Onboarding> {
   int currentIndex = 0;
   late PageController controller;
   final List<Category> categories;
 
-  _onboardingState({required this.categories});
+  _OnboardingState({required this.categories});
 
   @override
   void initState() {
@@ -27,16 +25,19 @@ class _onboardingState extends State<onboarding> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen dimensions
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: currentIndex > 0
             ? IconButton(
           icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.orange
+            Icons.arrow_back_ios,
+            color: Colors.orange,
           ),
-
           onPressed: () {
             controller.previousPage(
               duration: const Duration(milliseconds: 100),
@@ -61,31 +62,30 @@ class _onboardingState extends State<onboarding> {
           return ListView(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 0, left: 40, right: 40),
+                padding: EdgeInsets.only(top: 0, left: screenWidth * 0.1, right: screenWidth * 0.1),
                 child: Image.asset(
                   contents[i].image,
-                  width: 180,
-                  height: 180,
+                  width: screenWidth * 0.5, // 50% of screen width
+                  height: screenWidth * 0.5, // 50% of screen width
                 ),
               ),
-
               Padding(
-                padding: const EdgeInsets.only(top: 0, left: 40, right: 40),
+                padding: EdgeInsets.only(top: 0, left: screenWidth * 0.1, right: screenWidth * 0.1),
                 child: Text(
                   contents[i].title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 35,
+                    fontSize: screenWidth * 0.08, // 10% of screen width
                   ),
                 ),
               ),
               const SizedBox(height: 1),
               Padding(
-                padding: const EdgeInsets.only(top: 2, left: 40, right: 40),
+                padding: EdgeInsets.only(top: 2, left: screenWidth * 0.1, right: screenWidth * 0.1),
                 child: Text(
                   contents[i].description,
-                  style: const TextStyle(
-                    fontSize: 18,
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.04, // 5% of screen width
                     color: Colors.grey,
                   ),
                 ),
@@ -96,23 +96,21 @@ class _onboardingState extends State<onboarding> {
                 children: List.generate(
                   contents.length,
                       (index) => Container(
-                    height: 10,
-                    width: currentIndex == index ? 20 : 10,
-                    margin: const EdgeInsets.only(right: 7),
+                    height: screenHeight * 0.013, // Height of the indicator is 1% of screen height
+                    width: currentIndex == index ? screenWidth * 0.045 : screenWidth * 0.03, // Width is 5% for the active indicator and 3% for inactive
+                    margin: EdgeInsets.only(right: screenWidth * 0.02), // Margin is 2% of screen width
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: index == currentIndex
-                          ? Colors.orange[800]
-                          : Colors.orange[800],
+                      color: Colors.orange[800],
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 1),
               Container(
-                height: 40,
+                height: screenHeight * 0.06, // 6% of screen height
                 width: double.infinity,
-                margin: const EdgeInsets.only(left: 40, right: 40, top: 20),
+                margin: EdgeInsets.only(left: screenWidth * 0.1, right: screenWidth * 0.1, top: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
@@ -124,8 +122,7 @@ class _onboardingState extends State<onboarding> {
                     ),
                   ],
                 ),
-                child:
-                MaterialButton(
+                child: MaterialButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -134,7 +131,7 @@ class _onboardingState extends State<onboarding> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>const Login_view(),
+                          builder: (context) => const Login_view(),
                         ),
                       );
                     } else {
@@ -149,25 +146,25 @@ class _onboardingState extends State<onboarding> {
                   },
                   color: Colors.orange[700],
                   textColor: Colors.white,
-                  child: const Text("Next"),
+                  child: Text("Next", style: TextStyle(
+                    fontSize: screenWidth * 0.05
+                  ),),
                 ),
-
-
-
-
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               Container(
-                child:  Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-
                     MaterialButton(
-                        child: const Text("Skipe",style: TextStyle(color: Colors.grey,letterSpacing: 2,fontWeight: FontWeight.bold),)
-                        ,onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Login_view()));
-                    }
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(color: Colors.grey, letterSpacing: 2, fontWeight: FontWeight.w700, fontSize: screenWidth * 0.05),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login_view()));
+                      },
                     ),
                   ],
                 ),
