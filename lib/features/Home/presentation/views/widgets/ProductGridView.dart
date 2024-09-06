@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/features/Home/data/models/Products.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ProductCard.dart';
 
@@ -14,15 +13,16 @@ class ProductGridView extends StatelessWidget {
       return const Center(child: Text('No products available'));
     }
 
+
     return Padding(
-      padding: EdgeInsets.all(8.w), // Responsive padding
+      padding: EdgeInsets.all(10),
       child: GridView.builder(
         shrinkWrap: true, // Allows GridView to fit within the constraints of its parent
         physics: const NeverScrollableScrollPhysics(), // Disable scrolling
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // Number of columns in the grid
-          crossAxisSpacing: 8.w, // Responsive horizontal spacing
-          mainAxisSpacing: 8.h, // Responsive vertical spacing
+          crossAxisSpacing: 2, // Responsive horizontal spacing
+          mainAxisSpacing: 2, // Responsive vertical spacing
           childAspectRatio: 0.6, // Aspect ratio of each item
         ),
         itemCount: products.length,

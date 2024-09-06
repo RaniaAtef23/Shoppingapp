@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/core/network/service_locator.dart';
 import 'package:shopping_app/features/Categories/views/CategoryScreen.dart';
 import 'package:shopping_app/features/Home/data/models/Category.dart';
@@ -17,7 +18,6 @@ import 'package:shopping_app/features/Home/presentation/views/widgets/SearchResu
 import 'package:shopping_app/features/Home/presentation/views/widgets/product_list_view.dart';
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 import 'package:shopping_app/features/authentication/login_view.dart';
-
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -146,13 +146,13 @@ class _HomeViewState extends State<HomeView> {
                     slivers: [
                       SliverToBoxAdapter(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          margin: EdgeInsets.symmetric(vertical: 8.0.h),
                           child: ImageSlider(images: images),
                         ),
                       ),
                       SliverToBoxAdapter(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          margin: EdgeInsets.symmetric(vertical: 8.0.h),
                           child: HorizontalCategoryList(
                             categories: categories, // Ensure this is fetched in the state
                           ),
@@ -160,14 +160,14 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 8.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0.w, vertical: 8.0.h),
                           child: Text(
                             'Popular Products',
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.orange,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                             ),
                           ),
                         ),
@@ -177,14 +177,14 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 8.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0.w, vertical: 8.0.h),
                           child: Text(
                             'Flash Sale',
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.orange,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                             ),
                           ),
                         ),
@@ -195,14 +195,14 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 8.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0.w, vertical: 8.0.h),
                           child: Text(
                             'You might like',
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 30,
+                              fontSize: 30.sp,
                             ),
                           ),
                         ),

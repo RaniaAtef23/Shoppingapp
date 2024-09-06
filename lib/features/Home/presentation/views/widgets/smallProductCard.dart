@@ -35,108 +35,113 @@ class _SmallProductCardState extends State<SmallProductCard> {
           ),
         );
       },
-      child: Container(
-        width: 160.w, // Responsive width
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          color: Colors.orange[100],
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 1), // Shadow position
-            ),
-          ],
-        ),
-        margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w), // Responsive margin
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
-                  child: Image.network(
-                    widget.product.thumbnail ?? 'https://via.placeholder.com/100',
-                    height: 110.h, // Responsive height
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Center(
-                      child: Icon(
-                        Icons.error,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 8.h, // Responsive position
-                  right: 8.w, // Responsive position
-                  child: ValueListenableBuilder<List<Products>>(
-                    valueListenable: FavoriteProductNotifier.favoriteProductsNotifier,
-                    builder: (context, favoriteProducts, child) {
-                      final isFavorite = favoriteProducts.contains(widget.product);
-                      return IconButton(
-                        icon: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : Colors.grey,
-                        ),
-                        onPressed: () {
-                          toggleFavorite();
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.w), // Responsive padding
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+
+        child: Container(
+          width: 130.w,
+          height: 250.h, // Adjusted height
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.orange[100],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: Offset(0, 1),
+              ),
+            ],
+          ),
+          child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Stack(
                 children: [
-                  Text(
-                    widget.product.title ?? 'Product',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.sp, // Responsive font size
+
+                     Padding(
+                       padding:  EdgeInsets.only(top: 20.h),
+                       child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          widget.product.thumbnail ?? 'https://via.placeholder.com/100',
+                          height: 100.h,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Center(
+                            child: Icon(Icons.error, color: Colors.red, size: 20),
+                          ),
+                        ),
+                                           ),
+                     ),
+
+                  Positioned(
+                    top: 8.h,
+                    right: 8.w,
+                    child: ValueListenableBuilder<List<Products>>(
+                      valueListenable: FavoriteProductNotifier.favoriteProductsNotifier,
+                      builder: (context, favoriteProducts, child) {
+                        final isFavorite = favoriteProducts.contains(widget.product);
+                        return IconButton(
+                          icon: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Colors.grey,
+                            size: 24.sp,
+                          ),
+                          onPressed: toggleFavorite,
+                        );
+                      },
                     ),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 4.h), // Responsive height
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      5,
-                          (index) => Icon(
-                        index < (widget.product.rating ?? 0).toInt()
-                            ? Icons.star
-                            : Icons.star_border,
-                        color: Colors.orange,
-                        size: 15.sp, // Responsive icon size
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 4.h), // Responsive height
-                  Text(
-                    '\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.sp, // Responsive font size
-                    ),
-                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                     Text(
+                        widget.product.title ?? 'Product',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10.sp,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+                    SizedBox(height: 4.h),
+                    FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          5,
+                              (index) => Icon(
+                            index < (widget.product.rating ?? 0).toInt()
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: Colors.orange,
+                            size: 15.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    FittedBox(
+                      child: Text(
+                        '\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
       ),
     );
   }

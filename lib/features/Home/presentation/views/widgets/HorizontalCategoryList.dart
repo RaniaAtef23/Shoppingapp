@@ -15,6 +15,7 @@ class HorizontalCategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 60.h,
+      width: 60.w,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,

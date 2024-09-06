@@ -38,11 +38,11 @@ class _MainScreenState extends State<MainScreen> {
         children: _pages,
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        items: const <Widget>[
-          Icon(Icons.home_outlined, size: 35, color: Colors.orange),
-          Icon(Icons.category, size: 30, color: Colors.orange),
-          Icon(Icons.shopping_cart, size: 30, color: Colors.orange),
-          Icon(Icons.favorite, size: 30, color: Colors.orange),
+        items: <Widget>[
+          Icon(Icons.home_outlined, size: 35.sp, color: Colors.orange),
+          Icon(Icons.category_outlined, size: 30.sp, color: Colors.orange),
+          Icon(Icons.shopping_cart_outlined, size: 30.sp, color: Colors.orange),
+          Icon(Icons.favorite, size: 30.sp, color: Colors.orange),
         ],
         index: _selectedIndex,
         color: Colors.white,
@@ -51,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),
         onTap: _onItemTapped,
-        height: 65,
+        height: 55.h,
       ),
     );
   }
