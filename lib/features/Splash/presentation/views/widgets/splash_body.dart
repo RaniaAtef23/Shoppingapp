@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:shopping_app/features/Splash/presentation/views/Onboarding_view.dart';
+
 class SplashBody extends StatefulWidget {
   const SplashBody({super.key});
 
@@ -39,10 +39,9 @@ class _SplashBodyState extends State<SplashBody> with SingleTickerProviderStateM
 
     // Navigate to the next screen after 5 seconds
     Timer(const Duration(seconds: 5), () {
-
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>   const onboarding_view()),
+        MaterialPageRoute(builder: (context) => const OnboardingView()),
       );
     });
   }
@@ -55,17 +54,24 @@ class _SplashBodyState extends State<SplashBody> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    // Get the screen dimensions
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
+    return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 10.0),
+        padding: EdgeInsets.only(bottom: screenHeight * 0.02), // 2% of screen height
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
-              child: Image.asset("assets/logo.gif",),
+              child: Image.asset(
+                "assets/logo.gif",
+                width: screenWidth * 0.5, // 50% of screen width
+                height: screenHeight * 0.3, // 30% of screen height
+              ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 10),
             SlideTransition(
               position: _slideAnimation,
               child: Center(
@@ -80,11 +86,11 @@ class _SplashBodyState extends State<SplashBody> with SingleTickerProviderStateM
                       end: Alignment.bottomRight,
                     ).createShader(bounds);
                   },
-                  child: const Text(
+                  child: Text(
                     "Shopping App",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 40,
+                      fontSize: screenWidth * 0.1, // 10% of screen width
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                     ),
