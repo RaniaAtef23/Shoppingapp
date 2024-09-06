@@ -1,10 +1,11 @@
+// lib/views/home_view.dart
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/core/network/service_locator.dart';
 import 'package:shopping_app/features/Categories/views/CategoryScreen.dart';
 import 'package:shopping_app/features/Home/data/models/Category.dart';
 import 'package:shopping_app/features/Home/data/models/Products.dart';
-import 'package:flutter/material.dart';
 import 'package:shopping_app/features/Home/data/repo/repo_imp.dart';
 import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fetch_product_cubit.dart';
 import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fetch_product_state.dart';
@@ -12,9 +13,11 @@ import 'package:shopping_app/features/Home/presentation/views/details_screen.dar
 import 'package:shopping_app/features/Home/presentation/views/widgets/HorizontalCategoryList.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ImageSlider.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ProductGridView.dart';
+import 'package:shopping_app/features/Home/presentation/views/widgets/SearchResultsWidget.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/product_list_view.dart';
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 import 'package:shopping_app/features/authentication/login_view.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -33,7 +36,7 @@ class _HomeViewState extends State<HomeView> {
   ];
   final TextEditingController _searchController = TextEditingController();
   List<Products> _filteredProducts = [];
-  bool _isSearchVisible = false; // Flag to control the visibility of the search results
+  bool _isSearchVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +126,7 @@ class _HomeViewState extends State<HomeView> {
                       },
                     ),
                     ListTile(
-                      leading: const Icon(
-                          Icons.login_rounded, color: Colors.orange),
+                      leading: const Icon(Icons.login_rounded, color: Colors.orange),
                       title: const Text('Login'),
                       onTap: () {
                         Navigator.pop(context);
@@ -211,88 +213,21 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
                   if (_isSearchVisible)
-                    Container(
-                      color: Colors.white.withOpacity(0.9),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                hintText: 'Enter product name',
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.close),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isSearchVisible = false;
-                                      _searchController.clear();
-                                      _filteredProducts = [];
-                                    });
-                                  },
-                                ),
-                              ),
-                              onChanged: (query) {
-                                setState(() {
-                                  _filteredProducts = filterProducts(state.moreproducts, query);
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: _filteredProducts.isEmpty
-                                ? Center(child: Text('No products found.'))
-                                : ListView.builder(
-                              itemCount: _filteredProducts.length,
-                              itemBuilder: (context, index) {
-                                final product = _filteredProducts[index];
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailsScreen(product: product),
-                                      ),
-                                    );
-                                  },
-                                  child: ListTile(
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Image.network(
-                                          product.thumbnail ?? 'https://via.placeholder.com/150',
-                                          height: 40.0,
-                                          width: 40.0,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        SizedBox(width: 8.0),
-                                        Expanded(
-                                          child: Text(
-                                            product.title!,
-                                            overflow: TextOverflow.ellipsis, // Ensure long titles are truncated
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 10.w),
-                                          child: Text('\$${product.price.toString()}',style: TextStyle(color: Colors.orange),),
-                                        ),
-                                        Divider(color: Colors.orange),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-
-
-                        ],
-                      ),
+                    SearchResultsWidget(
+                      filteredProducts: _filteredProducts,
+                      searchController: _searchController,
+                      onSearchChanged: (query) {
+                        setState(() {
+                          _filteredProducts = filterProducts(state.moreproducts, query);
+                        });
+                      },
+                      onClose: () {
+                        setState(() {
+                          _isSearchVisible = false;
+                          _searchController.clear();
+                          _filteredProducts = [];
+                        });
+                      },
                     ),
                 ],
               ),
