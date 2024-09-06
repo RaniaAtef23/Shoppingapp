@@ -1,17 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/core/network/service_locator.dart';
+import 'package:shopping_app/features/Categories/views/CategoryScreen.dart';
 import 'package:shopping_app/features/Home/data/models/Category.dart';
+import 'package:shopping_app/features/Home/data/models/Products.dart';
+import 'package:flutter/material.dart';
 import 'package:shopping_app/features/Home/data/repo/repo_imp.dart';
 import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fetch_product_cubit.dart';
 import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fetch_product_state.dart';
-import 'package:shopping_app/features/Categories/views/CategoryScreen.dart';
+import 'package:shopping_app/features/Home/presentation/views/details_screen.dart';
+import 'package:shopping_app/features/Home/presentation/views/widgets/HorizontalCategoryList.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ImageSlider.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ProductGridView.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/product_list_view.dart';
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 import 'package:shopping_app/features/authentication/login_view.dart';
-import 'widgets/HorizontalCategoryList.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -28,11 +31,15 @@ class _HomeViewState extends State<HomeView> {
     'assets/5028786.jpg',
     'assets/sl_100222_53080_35.jpg',
   ];
+  final TextEditingController _searchController = TextEditingController();
+  List<Products> _filteredProducts = [];
+  bool _isSearchVisible = false; // Flag to control the visibility of the search results
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FetchProductCubit(getIt.get<RepoHomeImpl>())..fetchProducts(),
+      create: (context) =>
+      FetchProductCubit(getIt.get<RepoHomeImpl>())..fetchProducts(),
       child: BlocBuilder<FetchProductCubit, FetchProductState>(
         builder: (context, state) {
           if (state is FetchProductLoading) {
@@ -60,10 +67,12 @@ class _HomeViewState extends State<HomeView> {
                 centerTitle: true,
                 actions: [
                   IconButton(
-                    icon: const Icon(Icons.notifications),
+                    icon: const Icon(Icons.search),
                     color: Colors.orange,
                     onPressed: () {
-                      // Add functionality for notifications button
+                      setState(() {
+                        _isSearchVisible = !_isSearchVisible;
+                      });
                     },
                   ),
                 ],
@@ -75,7 +84,8 @@ class _HomeViewState extends State<HomeView> {
                       accountName: Text('User Name'),
                       accountEmail: Text('user@example.com'),
                       currentAccountPicture: CircleAvatar(
-                        backgroundImage: AssetImage('assets/a2020cf5-9244-4244-8b8b-46186a571545.jpg'),
+                        backgroundImage: AssetImage(
+                            'assets/a2020cf5-9244-4244-8b8b-46186a571545.jpg'),
                       ),
                       decoration: BoxDecoration(
                         color: Colors.orange,
@@ -95,7 +105,8 @@ class _HomeViewState extends State<HomeView> {
                         Navigator.pop(context);
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const CategoryScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const CategoryScreen()),
                         );
                       },
                     ),
@@ -106,88 +117,183 @@ class _HomeViewState extends State<HomeView> {
                         Navigator.pop(context);
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const Create_account()),
+                          MaterialPageRoute(
+                              builder: (context) => const Create_account()),
                         );
                       },
                     ),
                     ListTile(
-                      leading: const Icon(Icons.login_rounded, color: Colors.orange),
+                      leading: const Icon(
+                          Icons.login_rounded, color: Colors.orange),
                       title: const Text('Login'),
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const Login_view()),
+                          MaterialPageRoute(
+                              builder: (context) => const Login_view()),
                         );
                       },
                     ),
                   ],
                 ),
               ),
-              body: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: ImageSlider(images: images),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: HorizontalCategoryList(
-                        categories: categories, // Ensure this is fetched in the state
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: Text(
-                        'Popular Products',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                          fontSize: 20,
+              body: Stack(
+                children: [
+                  CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ImageSlider(images: images),
                         ),
                       ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: PopularProductList(products: state.popularProducts),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: Text(
-                        'Flash Sale',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                          fontSize: 20,
+                      SliverToBoxAdapter(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: HorizontalCategoryList(
+                            categories: categories, // Ensure this is fetched in the state
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: PopularProductList(products: state.flashSaleProducts),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: Text(
-                        'You might like',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 30,
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
+                          child: Text(
+                            'Popular Products',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
+                      SliverToBoxAdapter(
+                        child: PopularProductList(products: state.popularProducts),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
+                          child: Text(
+                            'Flash Sale',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: PopularProductList(
+                            products: state.flashSaleProducts),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
+                          child: Text(
+                            'You might like',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: ProductGridView(products: state.moreproducts),
+                      ),
+                    ],
+                  ),
+                  if (_isSearchVisible)
+                    Container(
+                      color: Colors.white.withOpacity(0.9),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: 'Enter product name',
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isSearchVisible = false;
+                                      _searchController.clear();
+                                      _filteredProducts = [];
+                                    });
+                                  },
+                                ),
+                              ),
+                              onChanged: (query) {
+                                setState(() {
+                                  _filteredProducts = filterProducts(state.moreproducts, query);
+                                });
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: _filteredProducts.isEmpty
+                                ? Center(child: Text('No products found.'))
+                                : ListView.builder(
+                              itemCount: _filteredProducts.length,
+                              itemBuilder: (context, index) {
+                                final product = _filteredProducts[index];
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailsScreen(product: product),
+                                      ),
+                                    );
+                                  },
+                                  child: ListTile(
+                                    title: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Image.network(
+                                          product.thumbnail ?? 'https://via.placeholder.com/150',
+                                          height: 40.0,
+                                          width: 40.0,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        SizedBox(width: 8.0),
+                                        Expanded(
+                                          child: Text(
+                                            product.title!,
+                                            overflow: TextOverflow.ellipsis, // Ensure long titles are truncated
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 10.w),
+                                          child: Text('\$${product.price.toString()}',style: TextStyle(color: Colors.orange),),
+                                        ),
+                                        Divider(color: Colors.orange),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+
+
+                        ],
+                      ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: ProductGridView(products: state.moreproducts),
-                  ),
                 ],
               ),
             );
@@ -197,5 +303,12 @@ class _HomeViewState extends State<HomeView> {
         },
       ),
     );
+  }
+
+  List<Products> filterProducts(List<Products> products, String query) {
+    return products
+        .where((product) =>
+        product.title!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 }
