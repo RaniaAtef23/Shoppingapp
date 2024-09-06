@@ -37,8 +37,8 @@ class _SmallProductCardState extends State<SmallProductCard> {
       },
 
         child: Container(
-          width: 130.w,
-          height: 250.h, // Adjusted height
+          width: 160.w,
+          height: 260.h, // Adjusted height
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: Colors.orange[100],
@@ -58,12 +58,12 @@ class _SmallProductCardState extends State<SmallProductCard> {
                 children: [
 
                      Padding(
-                       padding:  EdgeInsets.only(top: 20.h),
+                       padding:  EdgeInsets.only(top: 10.h),
                        child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
                           widget.product.thumbnail ?? 'https://via.placeholder.com/100',
-                          height: 100.h,
+                          height: 200.h,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) => Center(
