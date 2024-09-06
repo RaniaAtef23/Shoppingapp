@@ -39,6 +39,7 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
           style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w600,
             color: Colors.orange,
+            fontSize: 20.sp, // Responsive font size
           ),
         ),
         centerTitle: true,
@@ -50,7 +51,7 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)), // Use responsive radius
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)), // Responsive radius
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)),
@@ -67,10 +68,10 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                 ),
               ),
             ),
-            SizedBox(height: 20.h), // Use responsive height
+            SizedBox(height: 20.h), // Responsive height
             // Product Information
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w), // Use responsive width
+              padding: EdgeInsets.symmetric(horizontal: 16.w), // Responsive padding
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -80,17 +81,19 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                     style: theme.textTheme.headlineSmall?.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
+                      fontSize: 22.sp, // Responsive font size
                     ),
                   ),
-                  SizedBox(height: 8.h), // Use responsive height
+                  SizedBox(height: 8.h), // Responsive height
                   Text(
                     "\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}",
                     style: theme.textTheme.titleLarge?.copyWith(
                       color: Colors.orange,
                       fontWeight: FontWeight.w700,
+                      fontSize: 20.sp, // Responsive font size
                     ),
                   ),
-                  SizedBox(height: 16.h), // Use responsive height
+                  SizedBox(height: 16.h), // Responsive height
                   // Tab Bar
                   TabBar(
                     controller: _tabController,
@@ -104,7 +107,7 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                   ),
                   // TabBarView
                   SizedBox(
-                    height: 300.h, // Set a fixed height for the TabBarView
+                    height: 300.h, // Responsive height for TabBarView
                     child: TabBarView(
                       controller: _tabController,
                       children: [
@@ -130,7 +133,6 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                     return AlertDialog(
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
-                        // Use min to avoid taking up extra space
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -140,7 +142,7 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                             style: TextStyle(
                               color: const Color(0xFF101623),
                               fontWeight: FontWeight.w700,
-                              fontSize: 18.sp,
+                              fontSize: 18.sp, // Responsive font size
                               fontFamily: 'Comfortaa',
                             ),
                           ),
@@ -150,7 +152,7 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                               style: TextStyle(
                                 color: const Color(0xFFA1A8B0),
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
+                                fontSize: 16.sp, // Responsive font size
                                 fontFamily: 'Comfortaa',
                               ),
                             ),
@@ -165,18 +167,17 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                             },
                             style: TextButton.styleFrom(
                               backgroundColor: Colors.orange,
-                              // Green background
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10), // Circular border
+                                borderRadius: BorderRadius.circular(10.r), // Responsive border radius
                               ),
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 50.w), // Responsive padding
                             ),
                             child: Text(
                               "Done",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16.sp,
+                                fontSize: 16.sp, // Responsive font size
                                 fontFamily: 'Comfortaa',
                               ),
                             ),
@@ -188,16 +189,16 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                 );
               },
               child: Container(
-                width: 300.w,
-                height: 45.h,
+                width: 300.w, // Responsive width
+                height: 45.h, // Responsive height
                 decoration: BoxDecoration(
                   color: Colors.orange,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r), // Responsive border radius
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
+                      spreadRadius: 2.r, // Responsive spread radius
+                      blurRadius: 5.r, // Responsive blur radius
                     ),
                   ],
                 ),
@@ -205,7 +206,7 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                   child: Text(
                     "Add To Cart",
                     style: TextStyle(
-                      fontSize: 18.sp,
+                      fontSize: 18.sp, // Responsive font size
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -213,31 +214,18 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                 ),
               ),
             ),
-            SizedBox(height: 5.h), // Corrected to avoid errors
+            SizedBox(height: 5.h), // Responsive height
           ],
         ),
       ),
     );
   }
 
-
-  // Function to toggle favorite status
-  void toggleFavorite() {
-    setState(() {
-      isFavorited = !isFavorited;
-      if (isFavorited) {
-        // Example: FavoritesScreen.addFavorite(widget.product);
-      } else {
-        // Example: FavoritesScreen.removeFavorite(widget.product);
-      }
-    });
-  }
-
   // Details Tab
   Widget _buildDetailsTab() {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16.w), // Use responsive width
+        padding: EdgeInsets.all(16.w), // Responsive padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -246,24 +234,25 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
+                fontSize: 18.sp, // Responsive font size
               ),
             ),
-            SizedBox(height: 8.h), // Use responsive height
+            SizedBox(height: 8.h), // Responsive height
             Text(
               widget.product.description ?? 'No description available',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.black54,
-                fontSize: 16, // Adjusted for ScreenUtil if needed
+                fontSize: 16.sp, // Responsive font size
               ),
             ),
-            SizedBox(height: 16.h), // Use responsive height
+            SizedBox(height: 16.h), // Responsive height
             // More information
             _buildInfoRow("Brand", widget.product.brand ?? 'Product brand'),
-            SizedBox(height: 5.h), // Use responsive height
+            SizedBox(height: 5.h), // Responsive height
             _buildInfoRow("Warranty", widget.product.warrantyInformation ?? 'N/A'),
-            SizedBox(height: 5.h), // Use responsive height
+            SizedBox(height: 5.h), // Responsive height
             _buildInfoRow("Return Policy", widget.product.returnPolicy ?? 'N/A'),
-            SizedBox(height: 5.h), // Use responsive height
+            SizedBox(height: 5.h), // Responsive height
             _buildInfoRow("Minimum Order Quantity", widget.product.minimumOrderQuantity?.toString() ?? 'N/A'),
           ],
         ),
@@ -274,14 +263,14 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
   // Reviews Tab
   Widget _buildReviewsTab() {
     return Padding(
-      padding: EdgeInsets.all(16.w), // Use responsive width
+      padding: EdgeInsets.all(16.w), // Responsive padding
       child: widget.product.reviews != null && widget.product.reviews!.isNotEmpty
           ? ListView.builder(
         itemCount: widget.product.reviews!.length,
         itemBuilder: (context, index) {
           final review = widget.product.reviews![index];
           return Padding(
-            padding: EdgeInsets.only(bottom: 16.h), // Use responsive height
+            padding: EdgeInsets.only(bottom: 16.h), // Responsive padding
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -294,71 +283,55 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                         color: Colors.orange,
                       ),
                       itemCount: 5,
-                      itemSize: 20.0,
+                      itemSize: 20.0.r, // Responsive item size
                       direction: Axis.horizontal,
                     ),
-                    SizedBox(width: 8.w), // Use responsive width
+                    SizedBox(width: 8.w), // Responsive width
                     Text(
                       "(${review.rating?.toString() ?? '0'}/5)",
-                      style: const TextStyle(
-                        color: Colors.black87,
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 14.sp, // Responsive font size
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 8.h), // Use responsive height
+                SizedBox(height: 8.h), // Responsive height
                 Text(
-                  review.comment ?? 'No comment',
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(height: 8.h), // Use responsive height
-                Text(
-                  review.date ?? 'Date not available',
-                  style: const TextStyle(
-                    color: Colors.black45,
-                    fontSize: 14,
-                  ),
+                  review.comment ?? 'No comment provided',
+                  style: TextStyle(fontSize: 16.sp), // Responsive font size
                 ),
               ],
             ),
           );
         },
       )
-          : const Center(
+          : Center(
         child: Text(
-          'No reviews yet',
-          style: TextStyle(
-            color: Colors.black45,
-            fontSize: 16,
-          ),
+          'No reviews available.',
+          style: TextStyle(fontSize: 16.sp), // Responsive font size
         ),
       ),
     );
   }
 
-  // Function to build rows for information
-  Row _buildInfoRow(String label, String value) {
+  // Build information row
+  Widget _buildInfoRow(String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16.sp, // Responsive font size
           ),
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black54,
-            fontSize: 16,
+            fontSize: 16.sp, // Responsive font size
           ),
         ),
       ],

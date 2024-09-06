@@ -36,44 +36,40 @@ class _SmallProductCardState extends State<SmallProductCard> {
         );
       },
       child: Container(
-        width: 160.w, // Responsive width
+        width: 160.w,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.r),
           color: Colors.orange[100],
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 1), // Shadow position
+              spreadRadius: 1.r,
+              blurRadius: 2.r,
+              offset: Offset(0, 1.h),
             ),
           ],
         ),
-        margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w), // Responsive margin
+        margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
                   child: Image.network(
                     widget.product.thumbnail ?? 'https://via.placeholder.com/100',
-                    height: 110.h, // Responsive height
+                    height: 110.h,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Center(
-                      child: Icon(
-                        Icons.error,
-                        color: Colors.red,
-                        size: 20,
-                      ),
+                    errorBuilder: (context, error, stackTrace) => Center(
+                      child: Icon(Icons.error, color: Colors.red, size: 20.sp),
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 8.h, // Responsive position
-                  right: 8.w, // Responsive position
+                  top: 8.h,
+                  right: 8.w,
                   child: ValueListenableBuilder<List<Products>>(
                     valueListenable: FavoriteProductNotifier.favoriteProductsNotifier,
                     builder: (context, favoriteProducts, child) {
@@ -82,10 +78,9 @@ class _SmallProductCardState extends State<SmallProductCard> {
                         icon: Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,
                           color: isFavorite ? Colors.red : Colors.grey,
+                          size: 24.sp,
                         ),
-                        onPressed: () {
-                          toggleFavorite();
-                        },
+                        onPressed: toggleFavorite,
                       );
                     },
                   ),
@@ -93,7 +88,7 @@ class _SmallProductCardState extends State<SmallProductCard> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(8.w), // Responsive padding
+              padding: EdgeInsets.all(8.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -102,13 +97,13 @@ class _SmallProductCardState extends State<SmallProductCard> {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.black87,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16.sp, // Responsive font size
+                      fontSize: 16.sp,
                     ),
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 4.h), // Responsive height
+                  SizedBox(height: 4.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
@@ -118,19 +113,18 @@ class _SmallProductCardState extends State<SmallProductCard> {
                             ? Icons.star
                             : Icons.star_border,
                         color: Colors.orange,
-                        size: 15.sp, // Responsive icon size
+                        size: 15.sp,
                       ),
                     ),
                   ),
-                  SizedBox(height: 4.h), // Responsive height
+                  SizedBox(height: 4.h),
                   Text(
                     '\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16.sp, // Responsive font size
+                      fontSize: 14.sp,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

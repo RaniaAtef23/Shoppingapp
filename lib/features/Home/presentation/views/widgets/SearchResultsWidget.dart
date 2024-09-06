@@ -1,6 +1,5 @@
-// lib/widgets/search_results_widget.dart
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/features/Home/data/models/Products.dart';
 import 'package:shopping_app/features/Home/presentation/views/details_screen.dart';
 
@@ -25,7 +24,7 @@ class SearchResultsWidget extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.w), // Responsive padding
             child: TextField(
               controller: searchController,
               decoration: InputDecoration(
@@ -60,11 +59,11 @@ class SearchResultsWidget extends StatelessWidget {
                       children: [
                         Image.network(
                           product.thumbnail ?? 'https://via.placeholder.com/150',
-                          height: 40.0,
-                          width: 40.0,
+                          height: 40.h, // Responsive height
+                          width: 40.w, // Responsive width
                           fit: BoxFit.cover,
                         ),
-                        SizedBox(width: 8.0),
+                        SizedBox(width: 8.w), // Responsive width
                         Expanded(
                           child: Text(
                             product.title!,
@@ -77,9 +76,9 @@ class SearchResultsWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 10.0),
+                          padding: EdgeInsets.only(left: 10.w), // Responsive padding
                           child: Text(
-                            '\$${product.price.toString()}',
+                            '\$${product.price?.toString() ?? '0.00'}',
                             style: TextStyle(color: Colors.orange),
                           ),
                         ),
