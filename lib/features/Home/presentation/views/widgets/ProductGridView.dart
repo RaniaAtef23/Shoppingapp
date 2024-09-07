@@ -13,19 +13,16 @@ class ProductGridView extends StatelessWidget {
       return const Center(child: Text('No products available'));
     }
 
-    double padding = MediaQuery.of(context).size.width * 0.02; // 2% of screen width
-    double crossAxisSpacing = MediaQuery.of(context).size.width * 0.02; // 2% of screen width
-    double mainAxisSpacing = MediaQuery.of(context).size.height * 0.01; // 1% of screen height
 
     return Padding(
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.all(10),
       child: GridView.builder(
         shrinkWrap: true, // Allows GridView to fit within the constraints of its parent
         physics: const NeverScrollableScrollPhysics(), // Disable scrolling
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // Number of columns in the grid
-          crossAxisSpacing: crossAxisSpacing, // Responsive horizontal spacing
-          mainAxisSpacing: mainAxisSpacing, // Responsive vertical spacing
+          crossAxisSpacing: 2, // Responsive horizontal spacing
+          mainAxisSpacing: 2, // Responsive vertical spacing
           childAspectRatio: 0.6, // Aspect ratio of each item
         ),
         itemCount: products.length,

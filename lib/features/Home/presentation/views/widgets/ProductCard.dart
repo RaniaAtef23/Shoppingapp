@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/features/CartFavoriteItems/presentation/views/widgets/cart_widget.dart';
 import 'package:shopping_app/features/CartFavoriteItems/presentation/views/widgets/favorite_product_notifier.dart';
 import '../../../data/models/Products.dart';
@@ -38,14 +39,8 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    double cardHeight = MediaQuery.of(context).size.height * 0.3; // 30% of screen height
-    double imageHeight = cardHeight * 0.7; // 50% of card height
-    double iconSize = MediaQuery.of(context).size.width * 0.06; // 6% of screen width
-    double fontSizeTitle = MediaQuery.of(context).size.width * 0.04; // 4% of screen width
-    double fontSizePrice = MediaQuery.of(context).size.width * 0.045; // 4.5% of screen width
-
     return SizedBox(
-      height: cardHeight,
+      height: 100.h,
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -55,126 +50,129 @@ class _ProductCardState extends State<ProductCard> {
             ),
           );
         },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          elevation: 8,
-          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16.0)),
-                    child: SizedBox(
-                      height: imageHeight,
-                      width: double.infinity,
-                      child: Image.network(
-                        widget.product.thumbnail ?? 'https://via.placeholder.com/150',
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Center(
-                          child: Icon(Icons.error, color: Colors.red, size: iconSize),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: ValueListenableBuilder<List<Products>>(
-                      valueListenable: FavoriteProductNotifier.favoriteProductsNotifier,
-                      builder: (context, favoriteProducts, child) {
-                        final isFavorite = favoriteProducts.contains(widget.product);
-                        return IconButton(
-                          icon: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: isFavorite ? Colors.red : Colors.grey,
-                            size: iconSize,
-                          ),
-                          onPressed: toggleFavorite,
-                        );
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.black.withOpacity(0.7), Colors.transparent],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16.0)),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Center(
-                        child: Text(
-                          widget.product.title ?? 'Product Title',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: fontSizeTitle,
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+        child: Container(
+
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            elevation: 8,
+            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Ensure the column takes only the space it needs
+              children: [
+                Stack(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        5,
-                            (index) => Icon(
-                          index < (widget.product.rating ?? 0).toInt()
-                              ? Icons.star
-                              : Icons.star_border,
-                          color: Colors.orange,
-                          size: iconSize,
+                    ClipRRect(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+                      child: Container(
+                        height: 150.h,
+                        width: double.infinity,
+                        child: Image.network(
+                          widget.product.thumbnail ?? 'https://via.placeholder.com/150',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Center(
+                            child: Icon(Icons.error, color: Colors.red, size: 10),
+                          ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.shopping_cart, color: Colors.red, size: iconSize),
-                              onPressed: addToCart,
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: ValueListenableBuilder<List<Products>>(
+                        valueListenable: FavoriteProductNotifier.favoriteProductsNotifier,
+                        builder: (context, favoriteProducts, child) {
+                          final isFavorite = favoriteProducts.contains(widget.product);
+                          return IconButton(
+                            icon: Icon(
+                              isFavorite ? Icons.favorite : Icons.favorite_border,
+                              color: isFavorite ? Colors.red : Colors.grey,
+                              size: 20.sp,
                             ),
-                            Expanded(
-                              child: Text(
-                                '\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}',
-                                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: fontSizePrice,
-                                ),
-                                textAlign: TextAlign.right,
+                            onPressed: toggleFavorite,
+                          );
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                          borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.0)),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Center(
+                          child: FittedBox(
+                            child: Text(
+                              widget.product.title ?? 'Product Title',
+                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.sp,
                               ),
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: FittedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                            5,
+                                (index) => Icon(
+                              index < (widget.product.rating ?? 0).toInt()
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: Colors.orange,
+                              size: 15.sp,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.shopping_cart, color: Colors.red, size: 15.sp),
+                                onPressed: addToCart,
+                              ),
+                              Text(
+                                '\$${widget.product.price?.toStringAsFixed(2) ?? '0.00'}',
+                                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

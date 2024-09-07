@@ -16,7 +16,6 @@ import 'package:shopping_app/features/Home/presentation/views/widgets/product_li
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 import 'package:shopping_app/features/authentication/login_view.dart';
 
-
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -211,21 +210,26 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
                   if (_isSearchVisible)
-                    SearchResultsWidget(
-                      filteredProducts: _filteredProducts,
-                      searchController: _searchController,
-                      onSearchChanged: (query) {
-                        setState(() {
-                          _filteredProducts = filterProducts(state.moreproducts, query);
-                        });
-                      },
-                      onClose: () {
-                        setState(() {
-                          _isSearchVisible = false;
-                          _searchController.clear();
-                          _filteredProducts = [];
-                        });
-                      },
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: SearchResultsWidget(
+                        filteredProducts: _filteredProducts,
+                        searchController: _searchController,
+                        onSearchChanged: (query) {
+                          setState(() {
+                            _filteredProducts = filterProducts(state.moreproducts, query);
+                          });
+                        },
+                        onClose: () {
+                          setState(() {
+                            _isSearchVisible = false;
+                            _searchController.clear();
+                            _filteredProducts = [];
+                          });
+                        },
+                      ),
                     ),
                 ],
               ),
