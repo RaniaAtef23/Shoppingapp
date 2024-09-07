@@ -13,7 +13,11 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.categoryProductsScreen);
+        Navigator.pushNamed(
+          context,
+          Routes.categoryProductsScreen,
+          arguments: category,
+        );
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h), // Use ScreenUtil for padding
