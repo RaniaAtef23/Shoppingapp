@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(390, 844), // Specify the design size for responsiveness
       builder: (context, child) {
         return MaterialApp(
-          initialRoute: Routes.homeView, // Initial route for the app
+          initialRoute: Routes.splashView, // Initial route for the app
           onGenerateRoute: Routes.generateRoute, // Generate routes dynamically
           debugShowCheckedModeBanner: false, // Disable the debug banner
           theme: ThemeData(

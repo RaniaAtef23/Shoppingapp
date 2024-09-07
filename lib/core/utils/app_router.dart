@@ -27,12 +27,12 @@ class Routes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-     // case splashView:
-        //return MaterialPageRoute(builder: (_) => const Splash_view());
-      //case onboardingView: // Added onboarding route case
-        //return MaterialPageRoute(builder: (_) => const OnboardingView());
-     // case mainScreen:
-        //return MaterialPageRoute(builder: (_) => const MainScreen());
+      case splashView:
+        return MaterialPageRoute(builder: (_) => const Splash_view());
+      case onboardingView: // Added onboarding route case
+        return MaterialPageRoute(builder: (_) => const OnboardingView());
+      case mainScreen:
+        return MaterialPageRoute(builder: (_) => const MainScreen());
       case homeView:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case categoryScreen:
@@ -43,8 +43,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const FavoritesScreen());
       case createAccountView:
         return MaterialPageRoute(builder: (_) => const Create_account());
-      //case loginView:
-        //return MaterialPageRoute(builder: (_) => const Login_view());
+      case loginView:
+        return MaterialPageRoute(builder: (_) => const Login_view());
       case detailsScreen:
         final product = settings.arguments as Products;
         return MaterialPageRoute(
