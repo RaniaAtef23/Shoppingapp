@@ -13,7 +13,7 @@ class PopularProductList extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w), // Responsive horizontal padding
       child: SizedBox(
-        height: 350.h, // Responsive height
+        height: 360.h, // Responsive height
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: products.length,

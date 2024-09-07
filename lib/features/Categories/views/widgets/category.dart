@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:shopping_app/features/Categories/data/models/Category.dart';
+import 'package:shopping_app/features/Home/presentation/views/details_screen.dart';
+import 'package:shopping_app/features/Home/presentation/views/details_screen.dart';
 import '../../../../core/utils/app_router.dart';
 import '../CategoryProductScreen.dart';
 
