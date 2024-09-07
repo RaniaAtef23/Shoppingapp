@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
+import 'package:shopping_app/core/utils/app_router.dart';
 import '../../../../Home/data/models/Products.dart';
 
 class CartWidget extends StatefulWidget {
@@ -30,12 +31,57 @@ class _CartWidgetState extends State<CartWidget> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Icons.shopping_cart_outlined, color: Colors.orange),
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.cartView);
+                },
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: ValueListenableBuilder<List<Products>>(
+                  valueListenable: CartWidget.cartProductsNotifier,
+                  builder: (context, cartProducts, child) {
+                    final itemCount = cartProducts.length;
+                    return itemCount > 0
+                        ? Container(
+                      padding: EdgeInsets.all(4.sp),
+                      constraints: BoxConstraints(
+                        maxWidth: 24.w,
+                        maxHeight: 24.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '$itemCount',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      ),
+                    )
+                        : SizedBox.shrink(); // Hide badge when itemCount is 0
+                  },
+                ),
+              ),
+            ],
+          ),
+        ],
         title: Text(
           'Cart Items',
           style: TextStyle(
               color: Colors.orange,
               fontWeight: FontWeight.bold,
-              fontSize: 24.sp , // You can replace this with 24.sp if needed
+              fontSize: 24.sp, // You can replace this with 24.sp if needed
               letterSpacing: 1.2),
         ),
         centerTitle: true,
@@ -58,7 +104,7 @@ class _CartWidgetState extends State<CartWidget> {
                           height: 150.h, // Use ScreenUtil for height
                         ),
                         const SizedBox(height: 20),
-                         Text(
+                        Text(
                           'Your cart is empty!',
                           style: TextStyle(
                             fontSize: 24.sp,
@@ -236,63 +282,66 @@ class _CartWidgetState extends State<CartWidget> {
                               fontSize: 18.sp), // Use ScreenUtil
                         ),
                         onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    // Use min to avoid taking up extra space
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Image.network("assets/0Hh1OfxW4H.gif"),
-                                      Text(
-                                        'Ordered successfully',
-                                        style: TextStyle(
-                                          color: const Color(0xFF101623),
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18.sp,
-                                          fontFamily: 'Comfortaa',
-                                        ),
-                                      ),
+                          // Reset the cart and product quantities
+                          setState(() {
+                            CartWidget.cartProductsNotifier.value = [];
+                            productQuantities.clear();
+                          });
 
-                                    ],
-                                  ),
-                                  actions: [
-                                    Center(
-                                      child: TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
-                                          // Close the dialog
-                                        },
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Colors.orange,
-                                          // Green background
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10), // Circular border
-                                          ),
-                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                                        ),
-                                        child: Text(
-                                          "Done",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16.sp,
-                                            fontFamily: 'Comfortaa',
-                                          ),
-                                        ),
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  // Use min to avoid taking up extra space
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.network("assets/0Hh1OfxW4H.gif"),
+                                    Text(
+                                      'Ordered successfully',
+                                      style: TextStyle(
+                                        color: const Color(0xFF101623),
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18.sp,
+                                        fontFamily: 'Comfortaa',
                                       ),
                                     ),
                                   ],
-                                );
-                              },
-                            );
-
-                          // Handle order now action
+                                ),
+                                actions: [
+                                  Center(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                        // Close the dialog
+                                      },
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.orange,
+                                        // Green background
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10), // Circular border
+                                        ),
+                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                                      ),
+                                      child: Text(
+                                        "Done",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.sp,
+                                          fontFamily: 'Comfortaa',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                       ),
                       const SizedBox(height: 20),
