@@ -205,6 +205,7 @@ class _HomeViewState extends State<HomeView> {
                       top: 0,
                       left: 0,
                       right: 0,
+                      height: 500.0, // Adjust the height as needed
                       child: SearchResultsWidget(
                         filteredProducts: _filteredProducts,
                         searchController: _searchController,
@@ -221,7 +222,8 @@ class _HomeViewState extends State<HomeView> {
                           });
                         },
                       ),
-                    ),
+                    )
+
                 ],
               ),
             );
