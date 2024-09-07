@@ -60,15 +60,15 @@ class _ProductCardState extends State<ProductCard> {
             borderRadius: BorderRadius.circular(16.0),
           ),
           elevation: 8,
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
-                    child: Container(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16.0)),
+                    child: SizedBox(
                       height: imageHeight,
                       width: double.infinity,
                       child: Image.network(
@@ -109,9 +109,9 @@ class _ProductCardState extends State<ProductCard> {
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
                         ),
-                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.0)),
+                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16.0)),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Center(
                         child: Text(
                           widget.product.title ?? 'Product Title',
@@ -129,7 +129,7 @@ class _ProductCardState extends State<ProductCard> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

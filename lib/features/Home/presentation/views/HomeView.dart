@@ -8,7 +8,6 @@ import 'package:shopping_app/features/Home/data/models/Products.dart';
 import 'package:shopping_app/features/Home/data/repo/repo_imp.dart';
 import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fetch_product_cubit.dart';
 import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fetch_product_state.dart';
-import 'package:shopping_app/features/Home/presentation/views/details_screen.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/HorizontalCategoryList.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ImageSlider.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ProductGridView.dart';

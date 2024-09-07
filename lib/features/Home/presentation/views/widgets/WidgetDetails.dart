@@ -163,7 +163,7 @@ class _WidgetDetailsState extends State<WidgetDetails> with SingleTickerProvider
                         Center(
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart_view())); // Close the dialog
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>const Cart_view())); // Close the dialog
                             },
                             style: TextButton.styleFrom(
                               backgroundColor: Colors.orange,

@@ -10,12 +10,12 @@ class SearchResultsWidget extends StatelessWidget {
   final VoidCallback onClose;
 
   const SearchResultsWidget({
-    Key? key,
+    super.key,
     required this.filteredProducts,
     required this.searchController,
     required this.onSearchChanged,
     required this.onClose,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class SearchResultsWidget extends StatelessWidget {
           ),
           Expanded(
             child: filteredProducts.isEmpty
-                ? Center(child: Text('No products found.'))
+                ? const Center(child: Text('No products found.'))
                 : ListView.builder(
               itemCount: filteredProducts.length,
               itemBuilder: (context, index) {
@@ -79,10 +79,10 @@ class SearchResultsWidget extends StatelessWidget {
                           padding: EdgeInsets.only(left: 10.w), // Responsive padding
                           child: Text(
                             '\$${product.price?.toString() ?? '0.00'}',
-                            style: TextStyle(color: Colors.orange),
+                            style: const TextStyle(color: Colors.orange),
                           ),
                         ),
-                        Divider(color: Colors.orange),
+                        const Divider(color: Colors.orange),
                       ],
                     ),
                   ),
