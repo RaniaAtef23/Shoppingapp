@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/app_router.dart';
 import '../../Home/presentation/views/MainScreen.dart';
+import '../create_account_view.dart';
 import '../login_view.dart';
 class Login_body extends StatefulWidget {
   const Login_body({super.key});
@@ -218,12 +220,8 @@ class _LoginState extends State<Login_body> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const MainScreen(), // Adjust the target screen as needed
-                                ),
-                              );
+                              Navigator.pushNamed(context, Routes.mainScreen);
+
                             },
                             child: const Text(
                               "Skip",

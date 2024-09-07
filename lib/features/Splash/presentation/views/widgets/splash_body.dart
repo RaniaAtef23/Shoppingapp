@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/features/Splash/presentation/views/Onboarding_view.dart';
+import '../../../../../core/utils/app_router.dart';
 
 class SplashBody extends StatefulWidget {
   const SplashBody({super.key});
@@ -17,58 +18,50 @@ class _SplashBodyState extends State<SplashBody> with SingleTickerProviderStateM
   void initState() {
     super.initState();
 
-    // Initialize the animation controller
     _controller = AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this,
     );
 
-    // Create the slide animation
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 6), // Start from below the screen
-      end: Offset.zero, // End at its original position
+      begin: const Offset(0, 6),
+      end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
     ));
 
-    // Start the animation
     Timer(const Duration(seconds: 1), () {
-      _controller.forward(); // Start the animation after delay
+      _controller.forward();
     });
 
-    // Navigate to the next screen after 5 seconds
     Timer(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const OnboardingView()),
-      );
+      Navigator.pushReplacementNamed(context, Routes.onboardingView);
     });
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Dispose of the controller
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen dimensions
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(bottom: screenHeight * 0.02), // 2% of screen height
+        padding: EdgeInsets.only(bottom: screenHeight * 0.02),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
               child: Image.asset(
                 "assets/logo.gif",
-                width: screenWidth * 0.5, // 50% of screen width
-                height: screenHeight * 0.3, // 30% of screen height
+                width: screenWidth * 0.5,
+                height: screenHeight * 0.3,
               ),
             ),
             const SizedBox(height: 10),
@@ -90,7 +83,7 @@ class _SplashBodyState extends State<SplashBody> with SingleTickerProviderStateM
                     "Shopping App",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: screenWidth * 0.1, // 10% of screen width
+                      fontSize: screenWidth * 0.1,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                     ),

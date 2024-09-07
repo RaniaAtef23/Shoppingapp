@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import screen utilities
 import 'package:shopping_app/core/network/service_locator.dart';
-import 'package:shopping_app/features/Home/data/models/Category.dart';
+import 'package:shopping_app/features/Categories/data/models/Category.dart';
 import 'package:shopping_app/features/Home/presentation/views/widgets/ProductGridView.dart';
 
-import '../../../Categories/Manger/Fetch_Product_Category/fetch_product_category_cubit.dart';
-import '../../../Categories/Manger/Fetch_Product_Category/fetch_product_category_state.dart';
-import '../../data/repo/repo_imp.dart';
+import '../Manger/Fetch_Product_Category/fetch_product_category_cubit.dart';
+import '../Manger/Fetch_Product_Category/fetch_product_category_state.dart';
+import '../../Home/data/repo/repo_imp.dart';
 
 class CategoryProductsScreen extends StatefulWidget {
   final Category category;

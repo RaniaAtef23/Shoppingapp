@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 
+import '../../../core/utils/app_router.dart';
+import '../create_account_view.dart';
+import '../login_view.dart';
+
 class Create_account_body extends StatefulWidget {
   const Create_account_body({super.key});
 
@@ -106,7 +110,7 @@ class _Create_account_bodyState extends State<Create_account_body> {
                 children: [
                   InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder:(context)=>const Login_view() ));
+                      Navigator.pushNamed(context, Routes.loginView);
                     },
                     child: const Icon(Icons.arrow_back_ios,color: Colors.orange,),
 
@@ -326,10 +330,8 @@ class _Create_account_bodyState extends State<Create_account_body> {
               height: 40,
               onPressed: () {
                 if (_isEmailValid && _isPasswordValid&&_isFirstNameValid&&_isLastNameValid&&_isUsernameValid&&_isPhonenumberValid) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Login_view()),
-                  );
+                  Navigator.pushNamed(context, Routes.loginView);
+
                 }
 
               },

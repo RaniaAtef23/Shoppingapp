@@ -23,7 +23,7 @@ class ProductGridView extends StatelessWidget {
           crossAxisCount: 2, // Number of columns in the grid
           crossAxisSpacing: 2, // Responsive horizontal spacing
           mainAxisSpacing: 2, // Responsive vertical spacing
-          childAspectRatio: 0.6, // Aspect ratio of each item
+          childAspectRatio: 0.7, // Aspect ratio of each item
         ),
         itemCount: products.length,
         itemBuilder: (context, index) {

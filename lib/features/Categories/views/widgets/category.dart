@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
-import 'package:shopping_app/features/Home/data/models/Category.dart';
-import '../../../Home/presentation/views/CategoryProductScreen.dart';
+import 'package:shopping_app/features/Categories/data/models/Category.dart';
+import '../../../../core/utils/app_router.dart';
+import '../CategoryProductScreen.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
@@ -12,12 +13,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CategoryProductsScreen(category: category),
-          ),
-        );
+        Navigator.pushNamed(context, Routes.categoryProductsScreen);
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h), // Use ScreenUtil for padding

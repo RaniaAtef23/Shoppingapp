@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_app/features/Home/presentation/views/widgets/smallProductCard.dart';
+import 'package:shopping_app/features/Home/presentation/views/widgets/orangeProductCard.dart';
 import '../../../data/models/Products.dart';
 
 class PopularProductList extends StatelessWidget {
@@ -13,7 +13,7 @@ class PopularProductList extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w), // Responsive horizontal padding
       child: SizedBox(
-        height: 390.h, // Responsive height
+        height: 300.h, // Responsive height
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: products.length,

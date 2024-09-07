@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_app/features/Home/data/models/Category.dart';
+import 'package:shopping_app/features/Categories/data/models/Category.dart';
 
 import 'package:shopping_app/features/Home/presentation/views/widgets/SmallCategoryWidget.dart';
 

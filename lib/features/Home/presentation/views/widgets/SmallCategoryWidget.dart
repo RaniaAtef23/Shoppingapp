@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_app/features/Home/data/models/Category.dart';
+import 'package:shopping_app/features/Categories/data/models/Category.dart';
 
-import '../CategoryProductScreen.dart';
+import '../../../../../core/utils/app_router.dart';
+import '../../../../Categories/views/CategoryProductScreen.dart';
 
 class SmallCategoryWidget extends StatelessWidget {
   final Category category;
@@ -13,11 +14,10 @@ class SmallCategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (context) => CategoryProductsScreen(category: category),
-          ),
+          Routes.categoryProductsScreen,
+          arguments: category,
         );
       },
       child: Padding(

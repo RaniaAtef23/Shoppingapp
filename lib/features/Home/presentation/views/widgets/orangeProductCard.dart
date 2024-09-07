@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/utils/app_router.dart';
 import '../../../../CartFavoriteItems/presentation/views/widgets/favorite_product_notifier.dart';
 import '../../../data/models/Products.dart';
 import '../details_screen.dart';
@@ -28,11 +29,10 @@ class _SmallProductCardState extends State<SmallProductCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (context) => DetailsScreen(product: widget.product),
-          ),
+          Routes.detailsScreen,
+          arguments: widget.product,
         );
       },
 
@@ -103,7 +103,7 @@ class _SmallProductCardState extends State<SmallProductCard> {
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Colors.black87,
                           fontWeight: FontWeight.w600,
-                          fontSize: 10.sp,
+                          fontSize: 15.sp,
                         ),
                         textAlign: TextAlign.center,
                         maxLines: 1,

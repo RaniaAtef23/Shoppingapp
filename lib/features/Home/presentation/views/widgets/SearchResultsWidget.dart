@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopping_app/core/utils/app_router.dart'; // Ensure this import is included
 import 'package:shopping_app/features/Home/data/models/Products.dart';
 import 'package:shopping_app/features/Home/presentation/views/details_screen.dart';
 
@@ -46,11 +47,10 @@ class SearchResultsWidget extends StatelessWidget {
                 final product = filteredProducts[index];
                 return InkWell(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsScreen(product: product),
-                      ),
+                      Routes.detailsScreen,
+                      arguments: product,
                     );
                   },
                   child: ListTile(

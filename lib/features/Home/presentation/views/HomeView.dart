@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/core/network/service_locator.dart';
 import 'package:shopping_app/features/Categories/views/CategoryScreen.dart';
-import 'package:shopping_app/features/Home/data/models/Category.dart';
+import 'package:shopping_app/features/Categories/data/models/Category.dart';
 import 'package:shopping_app/features/Home/data/models/Products.dart';
 import 'package:shopping_app/features/Home/data/repo/repo_imp.dart';
 import 'package:shopping_app/features/Home/presentation/Manager/Fetch_Product/fetch_product_cubit.dart';
@@ -15,6 +15,8 @@ import 'package:shopping_app/features/Home/presentation/views/widgets/SearchResu
 import 'package:shopping_app/features/Home/presentation/views/widgets/product_list_view.dart';
 import 'package:shopping_app/features/authentication/create_account_view.dart';
 import 'package:shopping_app/features/authentication/login_view.dart';
+
+import '../../../../core/utils/app_router.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -47,6 +49,7 @@ class _HomeViewState extends State<HomeView> {
           } else if (state is FetchProductSuccess) {
             return Scaffold(
               appBar: AppBar(
+                scrolledUnderElevation: 0,
                 backgroundColor: Colors.white,
                 elevation: 0,
                 leading: Builder(
@@ -84,8 +87,7 @@ class _HomeViewState extends State<HomeView> {
                       accountName: Text('User Name'),
                       accountEmail: Text('user@example.com'),
                       currentAccountPicture: CircleAvatar(
-                        backgroundImage: AssetImage(
-                            'assets/a2020cf5-9244-4244-8b8b-46186a571545.jpg'),
+                        backgroundImage: AssetImage('assets/a2020cf5-9244-4244-8b8b-46186a571545.jpg'),
                       ),
                       decoration: BoxDecoration(
                         color: Colors.orange,
@@ -103,11 +105,7 @@ class _HomeViewState extends State<HomeView> {
                       title: const Text('Categories'),
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CategoryScreen()),
-                        );
+                        Navigator.pushNamed(context, Routes.categoryScreen);
                       },
                     ),
                     ListTile(
@@ -115,11 +113,7 @@ class _HomeViewState extends State<HomeView> {
                       title: const Text('Sign Up'),
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Create_account()),
-                        );
+                        Navigator.pushNamed(context, Routes.createAccountView);
                       },
                     ),
                     ListTile(
@@ -127,16 +121,13 @@ class _HomeViewState extends State<HomeView> {
                       title: const Text('Login'),
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login_view()),
-                        );
+                        Navigator.pushNamed(context, Routes.loginView);
                       },
                     ),
                   ],
                 ),
               ),
+
               body: Stack(
                 children: [
                   CustomScrollView(
